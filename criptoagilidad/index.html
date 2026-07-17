@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Prueba de Criptoagilidad | magIA</title>
+  <style>
+    :root{
+      --bg:#06111f;
+      --bg2:#0a1b30;
+      --card:#0b1730;
+      --line:#1fd1ff;
+      --accent:#16c3ff;
+      --accent2:#7be7ff;
+      --text:#eef6ff;
+      --muted:#a8bfd7;
+      --green:#36d96f;
+      --yellow:#f6c244;
+      --red:#ff5f67;
+      --shadow:0 0 0 1px rgba(31,209,255,.28), 0 12px 32px rgba(0,0,0,.35);
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      font-family:Inter, Arial, Helvetica, sans-serif;
+      background:radial-gradient(circle at top right, rgba(22,195,255,.14), transparent 24%), linear-gradient(180deg, #040b16 0%, var(--bg) 35%, #071427 100%);
+      color:var(--text);
+      line-height:1.45;
+    }
+    .wrap{max-width:1100px;margin:0 auto;padding:32px 20px 48px}
+    .hero{
+      display:grid;
+      gap:18px;
+      margin-bottom:24px;
+      padding:24px;
+      border-radius:22px;
+      background:linear-gradient(180deg, rgba(12,28,53,.92), rgba(7,19,37,.92));
+      box-shadow:var(--shadow);
+      border:1px solid rgba(31,209,255,.24);
+      position:relative;
+      overflow:hidden;
+    }
+    .hero::after{
+      content:"";
+      position:absolute;inset:auto -60px -60px auto;
+      width:220px;height:220px;border-radius:50%;
+      background:radial-gradient(circle, rgba(31,209,255,.24), transparent 65%);
+      filter:blur(6px);
+    }
+    .eyebrow{color:var(--accent2);font-size:14px;font-weight:700;letter-spacing:.08em;text-transform:uppercase}
+    h1{margin:0;font-size:clamp(34px,5vw,62px);line-height:.95;font-weight:900}
+    h1 span{color:var(--accent)}
+    .subtitle{font-size:clamp(18px,2vw,24px);color:#d6ecff;max-width:850px}
+    .grid{display:grid;grid-template-columns:1.2fr .8fr;gap:22px;align-items:start}
+    @media (max-width:900px){.grid{grid-template-columns:1fr}}
+    .panel{
+      background:linear-gradient(180deg, rgba(11,23,48,.92), rgba(9,18,36,.95));
+      border:1px solid rgba(31,209,255,.22);
+      border-radius:20px;
+      box-shadow:var(--shadow);
+      padding:22px;
+    }
+    .panel h2{margin:0 0 14px;font-size:24px}
+    .steps{display:grid;gap:14px}
+    .step{
+      display:grid;
+      grid-template-columns:56px 1fr;
+      gap:14px;
+      align-items:start;
+      padding:14px;
+      border-radius:16px;
+      background:rgba(255,255,255,.02);
+      border:1px solid rgba(31,209,255,.18);
+    }
+    .num{
+      width:56px;height:56px;border-radius:50%;
+      display:grid;place-items:center;
+      font-size:28px;font-weight:900;color:var(--accent);
+      border:1px solid rgba(31,209,255,.42);
+      box-shadow: inset 0 0 20px rgba(22,195,255,.12), 0 0 18px rgba(22,195,255,.12);
+    }
+    .step h3{margin:0 0 4px;font-size:20px}
+    .step p{margin:0;color:var(--muted)}
+    .test-form{display:grid;gap:18px}
+    .question{
+      padding:16px;
+      border-radius:16px;
+      background:rgba(255,255,255,.025);
+      border:1px solid rgba(31,209,255,.18);
+    }
+    .question h3{margin:0 0 10px;font-size:18px}
+    .options{display:flex;flex-wrap:wrap;gap:12px}
+    .option{
+      display:flex;align-items:center;gap:8px;
+      padding:10px 12px;border-radius:999px;
+      background:rgba(7,26,48,.9);
+      border:1px solid rgba(31,209,255,.22);
+      color:#e9f7ff;
+      cursor:pointer;
+      user-select:none;
+    }
+    .option input{accent-color:var(--accent);transform:scale(1.1)}
+    .actions{display:flex;flex-wrap:wrap;gap:12px}
+    button{
+      border:0;border-radius:14px;padding:14px 18px;font-size:16px;font-weight:800;cursor:pointer;
+      transition:.2s ease transform,.2s ease opacity;
+    }
+    button:hover{transform:translateY(-1px)}
+    .primary{background:linear-gradient(90deg, var(--accent), #0aa9ff); color:#03111f;}
+    .secondary{background:#0c213b; color:#d9f3ff; border:1px solid rgba(31,209,255,.24)}
+    .legend{display:grid;gap:12px}
+    .legend-item{
+      display:flex;justify-content:space-between;gap:12px;align-items:center;
+      padding:12px 14px;border-radius:14px;font-weight:700
+    }
+    .green{background:rgba(54,217,111,.12);border:1px solid rgba(54,217,111,.45)}
+    .yellow{background:rgba(246,194,68,.12);border:1px solid rgba(246,194,68,.45)}
+    .red{background:rgba(255,95,103,.12);border:1px solid rgba(255,95,103,.45)}
+    .score-box{
+      margin-top:16px;padding:18px;border-radius:18px;
+      background:linear-gradient(180deg, rgba(8,21,40,.95), rgba(11,25,48,.95));
+      border:1px solid rgba(31,209,255,.2);
+      display:none;
+    }
+    .score{
+      font-size:42px;font-weight:900;line-height:1;margin:0 0 10px;color:var(--accent2)
+    }
+    .badge{
+      display:inline-block;padding:8px 12px;border-radius:999px;font-weight:800;margin-bottom:12px
+    }
+    .result-title{margin:0 0 8px;font-size:28px}
+    .result-copy{margin:0 0 12px;color:#d9ebff}
+    .reco{margin:8px 0 0;padding-left:18px;color:#eaf6ff}
+    .muted{color:var(--muted)}
+    .footer-note{
+      margin-top:22px;padding:16px 18px;border-radius:16px;
+      border:1px solid rgba(31,209,255,.18);background:rgba(255,255,255,.025)
+    }
+    .brand{margin-top:20px;text-align:center;color:#d8edff;font-weight:700}
+    .brand .ia{color:var(--accent)}
+    .mini{font-size:13px;color:var(--muted)}
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <section class="hero">
+      <div class="eyebrow">magIA · prueba interactiva</div>
+      <h1>Prueba de <span>criptoagilidad</span></h1>
+      <div class="subtitle">Descubra si su empresa podría cambiar sus cerraduras digitales sin detener pagos, accesos y operaciones críticas.</div>
+    </section>
+
+    <div class="grid">
+      <section class="panel">
+        <h2>Paso a paso</h2>
+        <div class="steps">
+          <article class="step">
+            <div class="num">1</div>
+            <div>
+              <h3>Reúna a las áreas clave</h3>
+              <p>Tecnología, finanzas, compras, jurídico y operaciones. La prueba es más útil si se responde con visión transversal.</p>
+            </div>
+          </article>
+          <article class="step">
+            <div class="num">2</div>
+            <div>
+              <h3>Responda las 5 preguntas</h3>
+              <p>Marque <strong>Sí</strong>, <strong>No lo sé</strong> o <strong>No</strong> según el nivel real de visibilidad y control que tiene la organización.</p>
+            </div>
+          </article>
+          <article class="step">
+            <div class="num">3</div>
+            <div>
+              <h3>Asigne puntaje</h3>
+              <p><strong>Sí = 2 puntos</strong> · <strong>No lo sé = 1 punto</strong> · <strong>No = 0 puntos</strong>.</p>
+            </div>
+          </article>
+          <article class="step">
+            <div class="num">4</div>
+            <div>
+              <h3>Interprete el resultado</h3>
+              <p>Verde: 8–10 puntos · Amarillo: 4–7 puntos · Rojo: 0–3 puntos.</p>
+            </div>
+          </article>
+          <article class="step">
+            <div class="num">5</div>
+            <div>
+              <h3>Defina la siguiente acción</h3>
+              <p>Use el resultado para decidir si debe validar inventarios, priorizar sistemas críticos o empezar desde el mapeo básico.</p>
+            </div>
+          </article>
+        </div>
+
+        <div class="footer-note">
+          <strong>Clave directiva:</strong> la criptoagilidad no es un tema técnico aislado; es capacidad de continuidad, control y protección de valor.
+        </div>
+      </section>
+
+      <section class="panel">
+        <h2>Conteste la prueba</h2>
+        <form id="cryptoForm" class="test-form">
+          <div class="question" data-name="q1">
+            <h3>1. ¿Sabemos dónde están nuestras cerraduras digitales?</h3>
+            <div class="options">
+              <label class="option"><input type="radio" name="q1" value="2"> Sí</label>
+              <label class="option"><input type="radio" name="q1" value="1"> No lo sé</label>
+              <label class="option"><input type="radio" name="q1" value="0"> No</label>
+            </div>
+          </div>
+
+          <div class="question" data-name="q2">
+            <h3>2. ¿Podemos reemplazar esa protección?</h3>
+            <div class="options">
+              <label class="option"><input type="radio" name="q2" value="2"> Sí</label>
+              <label class="option"><input type="radio" name="q2" value="1"> No lo sé</label>
+              <label class="option"><input type="radio" name="q2" value="0"> No</label>
+            </div>
+          </div>
+
+          <div class="question" data-name="q3">
+            <h3>3. ¿Sabemos quién tiene la responsabilidad?</h3>
+            <div class="options">
+              <label class="option"><input type="radio" name="q3" value="2"> Sí</label>
+              <label class="option"><input type="radio" name="q3" value="1"> No lo sé</label>
+              <label class="option"><input type="radio" name="q3" value="0"> No</label>
+            </div>
+          </div>
+
+          <div class="question" data-name="q4">
+            <h3>4. ¿Podemos cambiar sin detener la operación?</h3>
+            <div class="options">
+              <label class="option"><input type="radio" name="q4" value="2"> Sí</label>
+              <label class="option"><input type="radio" name="q4" value="1"> No lo sé</label>
+              <label class="option"><input type="radio" name="q4" value="0"> No</label>
+            </div>
+          </div>
+
+          <div class="question" data-name="q5">
+            <h3>5. ¿La protección dura tanto como el valor del dato?</h3>
+            <div class="options">
+              <label class="option"><input type="radio" name="q5" value="2"> Sí</label>
+              <label class="option"><input type="radio" name="q5" value="1"> No lo sé</label>
+              <label class="option"><input type="radio" name="q5" value="0"> No</label>
+            </div>
+          </div>
+
+          <div class="actions">
+            <button type="button" class="primary" id="calcBtn">Ver resultado</button>
+            <button type="reset" class="secondary" id="resetBtn">Reiniciar</button>
+          </div>
+        </form>
+
+        <div class="legend" style="margin-top:18px;">
+          <div class="legend-item green"><span>8 a 10 puntos</span><span>Verde · Control y capacidad de cambio</span></div>
+          <div class="legend-item yellow"><span>4 a 7 puntos</span><span>Amarillo · Protección conocida, transición incierta</span></div>
+          <div class="legend-item red"><span>0 a 3 puntos</span><span>Rojo · Dependencia desconocida</span></div>
+        </div>
+
+        <div class="score-box" id="resultBox" aria-live="polite">
+          <div class="score" id="scoreValue">0/10</div>
+          <div class="badge" id="resultBadge">Resultado</div>
+          <h3 class="result-title" id="resultTitle">Complete la prueba</h3>
+          <p class="result-copy" id="resultCopy"></p>
+          <ul class="reco" id="resultReco"></ul>
+        </div>
+
+        <div class="brand">Dra. Elda C. Morales · mag<span class="ia">IA</span> | Soy Marketing</div>
+        <p class="mini" style="text-align:center;">Herramienta orientativa para uso editorial y diagnóstico ejecutivo inicial.</p>
+      </section>
+    </div>
+  </div>
+
+  <script>
+    const calcBtn = document.getElementById('calcBtn');
+    const resetBtn = document.getElementById('resetBtn');
+    const form = document.getElementById('cryptoForm');
+    const resultBox = document.getElementById('resultBox');
+    const scoreValue = document.getElementById('scoreValue');
+    const resultBadge = document.getElementById('resultBadge');
+    const resultTitle = document.getElementById('resultTitle');
+    const resultCopy = document.getElementById('resultCopy');
+    const resultReco = document.getElementById('resultReco');
+
+    function setResult(type, score){
+      resultBox.style.display = 'block';
+      scoreValue.textContent = `${score}/10`;
+      resultReco.innerHTML = '';
+
+      const themes = {
+        verde: {
+          badge: 'Verde',
+          badgeStyle: 'background: rgba(54,217,111,.14); color: var(--green); border:1px solid rgba(54,217,111,.45);',
+          title: 'Control y capacidad de cambio',
+          copy: 'La organización ya cuenta con una base relevante de visibilidad y control sobre sus cerraduras digitales. El reto ahora es validar, probar y formalizar.',
+          reco: [
+            'Validar que el inventario criptográfico esté actualizado.',
+            'Realizar pruebas controladas de cambio o renovación en sistemas no críticos.',
+            'Formalizar responsabilidades con proveedores y áreas internas.'
+          ]
+        },
+        amarillo: {
+          badge: 'Amarillo',
+          badgeStyle: 'background: rgba(246,194,68,.14); color: var(--yellow); border:1px solid rgba(246,194,68,.45);',
+          title: 'Protección conocida, transición incierta',
+          copy: 'La empresa reconoce parte del problema, pero aún mantiene dependencias, vacíos contractuales o incertidumbre operativa que podrían complicar una migración.',
+          reco: [
+            'Priorizar sistemas críticos y revisar cuáles son más difíciles de actualizar.',
+            'Revisar contratos y exigir hojas de ruta a proveedores clave.',
+            'Crear un plan básico de transición con responsables y presupuesto preliminar.'
+          ]
+        },
+        rojo: {
+          badge: 'Rojo',
+          badgeStyle: 'background: rgba(255,95,103,.14); color: var(--red); border:1px solid rgba(255,95,103,.45);',
+          title: 'Dependencia desconocida',
+          copy: 'La principal vulnerabilidad es la falta de visibilidad. Antes de comprar tecnología o anunciar una migración, la prioridad debe ser entender qué existe y dónde está el riesgo.',
+          reco: [
+            'Construir un inventario inicial de sistemas, certificados, llaves y proveedores.',
+            'Identificar qué operaciones dependen de esas cerraduras digitales.',
+            'Mapear riesgos con tecnología, finanzas, compras y jurídico antes de decidir inversiones.'
+          ]
+        }
+      };
+
+      const data = themes[type];
+      resultBadge.textContent = data.badge;
+      resultBadge.style = data.badgeStyle;
+      resultTitle.textContent = data.title;
+      resultCopy.textContent = data.copy;
+      data.reco.forEach(item => {
+        const li = document.createElement('li');
+        li.textContent = item;
+        resultReco.appendChild(li);
+      });
+    }
+
+    calcBtn.addEventListener('click', () => {
+      const names = ['q1','q2','q3','q4','q5'];
+      let score = 0;
+      for(const n of names){
+        const checked = form.querySelector(`input[name="${n}"]:checked`);
+        if(!checked){
+          alert('Por favor responda las 5 preguntas antes de ver el resultado.');
+          return;
+        }
+        score += Number(checked.value);
+      }
+
+      if(score >= 8){
+        setResult('verde', score);
+      } else if(score >= 4){
+        setResult('amarillo', score);
+      } else {
+        setResult('rojo', score);
+      }
+
+      resultBox.scrollIntoView({behavior:'smooth', block:'start'});
+    });
+
+    resetBtn.addEventListener('click', () => {
+      setTimeout(() => {
+        resultBox.style.display = 'none';
+        scoreValue.textContent = '0/10';
+        resultTitle.textContent = 'Complete la prueba';
+        resultCopy.textContent = '';
+        resultReco.innerHTML = '';
+        resultBadge.textContent = 'Resultado';
+        resultBadge.style = '';
+      }, 0);
+    });
+  </script>
+</body>
+</html>
