@@ -7,7 +7,7 @@ Este repositorio forma parte del ecosistema editorial magIA y tiene como objetiv
 ## Herramientas disponibles
 
 - Prueba de criptoagilidad
-- Próximamente: diagnóstico de madurez en inteligencia artificial
+- Diagnóstico de madurez en inteligencia artificial
 - Próximamente: evaluación de preparación de datos
 - Próximamente: diagnóstico de automatización empresarial
 
